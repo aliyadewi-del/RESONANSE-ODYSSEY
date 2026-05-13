@@ -1370,27 +1370,56 @@
         /* Info Row - Wilayah & Alat Musik */
         .adventure-info-row {
             display: flex;
-            gap: clamp(8px, 1.2vw, 10px);
+            gap: clamp(10px, 1.2vw, 12px);
             width: 100%;
-            justify-content: space-between;
+            justify-content: center;
             flex-wrap: wrap;
         }
 
         .adventure-info-card {
-            flex: 1 1 130px;
-            min-width: 100px;
-            max-width: 160px;
+            flex: 1 1 220px;
+            min-width: 180px;
+            max-width: 280px;
             background: rgba(200, 155, 60, 0.1);
             border: 2px solid #C89B3C;
-            border-radius: 12px;
+            border-radius: 16px;
             padding: clamp(8px, 1vw, 10px);
-            text-align: center;
+            text-align: left;
             display: flex;
             flex-direction: column;
             gap: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            justify-content: center;
+        }
+
+        .adventure-info-card .info-label {
+            text-align: left;
+        }
+
+        .info-main {
+            display: flex;
             align-items: center;
+            gap: clamp(8px, 1vw, 10px);
+            justify-content: flex-start;
+            width: 100%;
+        }
+
+        .adventure-mini-image {
+            width: clamp(40px, 8vw, 52px);
+            height: clamp(40px, 8vw, 52px);
+            border-radius: 12px;
+            object-fit: cover;
+            border: 2px solid rgba(76, 35, 17, 0.16);
+        }
+
+        .info-value {
+            font-size: clamp(14px, 2.2vw, 18px);
+            font-weight: 900;
+            color: #3C2B20;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .adventure-mini-image {
@@ -1423,7 +1452,7 @@
         /* Game Stage */
         .adventure-stage {
             position: relative;
-            width: min(46vw, 42vh, 340px);
+            width: min(50vw, 44vh, 380px);
             max-width: 100%;
             aspect-ratio: 1 / 1;
             margin: 0 auto;
@@ -2826,14 +2855,18 @@
             
             <div class="adventure-info-row">
                 <div class="adventure-info-card">
-                    <img src="https://raw.githubusercontent.com/riyanarahman320/26/main/BANDUNG.png" alt="Wilayah Jawa Barat" class="adventure-mini-image">
                     <div class="info-label">WILAYAH</div>
-                    <div id="adventure-region-name" class="info-value">Jawa Barat</div>
+                    <div class="info-main">
+                        <img src="https://raw.githubusercontent.com/riyanarahman320/26/main/BANDUNG.png" alt="Wilayah Jawa Barat" class="adventure-mini-image">
+                        <span id="adventure-region-name" class="info-value">Jawa Barat</span>
+                    </div>
                 </div>
                 <div class="adventure-info-card">
-                    <img src="https://raw.githubusercontent.com/lorrainemydth-gif/MEDIA-RO/c98900fd489d86e38153e06b1ea237685d260695/angklung%20(1).png" alt="Alat Musik Angklung" class="adventure-mini-image">
                     <div class="info-label">ALAT MUSIK</div>
-                    <div id="adventure-instrument-name" class="info-value">🎵 Angklung</div>
+                    <div class="info-main">
+                        <img src="https://raw.githubusercontent.com/lorrainemydth-gif/MEDIA-RO/c98900fd489d86e38153e06b1ea237685d260695/angklung%20(1).png" alt="Alat Musik Angklung" class="adventure-mini-image">
+                        <span id="adventure-instrument-name" class="info-value">🎵 Angklung</span>
+                    </div>
                 </div>
             </div>
             
@@ -2849,6 +2882,11 @@
             
             <p id="adventure-instruction" class="adventure-instruction">Tangkap alat musik yang jatuh untuk lanjut ke soal</p>
             
+            <div class="adventure-buttons">
+                <button id="adventure-start-btn" class="btn-gold adventure-btn" onclick="startAdventure()">MULAI</button>
+                <button id="adventure-continue-btn" class="btn-gold adventure-btn hidden" onclick="proceedToQuiz()">LANJUT KE SOAL</button>
+            </div>
+            
             <div class="adventure-stats-row">
                 <div class="adventure-stat">
                     <div class="stat-label">WAKTU</div>
@@ -2862,11 +2900,6 @@
                     <div class="stat-label">SKOR</div>
                     <div id="adventure-score" class="stat-value">0</div>
                 </div>
-            </div>
-            
-            <div class="adventure-buttons">
-                <button id="adventure-start-btn" class="btn-gold adventure-btn" onclick="startAdventure()">MULAI MINI GAME</button>
-                <button id="adventure-continue-btn" class="btn-gold adventure-btn hidden" onclick="proceedToQuiz()">NEXT KE SOAL</button>
             </div>
             
             <p id="adventure-status" class="adventure-status-hidden"></p>
