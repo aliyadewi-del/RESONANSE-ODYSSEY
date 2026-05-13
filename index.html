@@ -1387,9 +1387,18 @@
             text-align: center;
             display: flex;
             flex-direction: column;
-            gap: 4px;
+            gap: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            align-items: center;
+        }
+
+        .adventure-mini-image {
+            width: clamp(64px, 12vw, 72px);
+            height: clamp(64px, 12vw, 72px);
+            border-radius: 16px;
+            object-fit: cover;
+            border: 2px solid rgba(76, 35, 17, 0.16);
         }
 
         .adventure-info-card:hover {
@@ -2809,14 +2818,16 @@
     <!-- ADVENTURE OVERLAY -->
     <div id="adventure-overlay" class="screen-overlay hidden">
         <div class="adventure-container">
-            <h2 class="adventure-title">🎮 MINI-GAME PETUALANGAN</h2>
+            <h2 class="adventure-title">[ MINI-GAME PETUALANGAN ]</h2>
             
             <div class="adventure-info-row">
                 <div class="adventure-info-card">
+                    <img src="https://raw.githubusercontent.com/riyanarahman320/26/main/BANDUNG.png" alt="Wilayah Jawa Barat" class="adventure-mini-image">
                     <div class="info-label">WILAYAH</div>
                     <div id="adventure-region-name" class="info-value">Jawa Barat</div>
                 </div>
                 <div class="adventure-info-card">
+                    <img src="https://raw.githubusercontent.com/lorrainemydth-gif/MEDIA-RO/c98900fd489d86e38153e06b1ea237685d260695/angklung%20(1).png" alt="Alat Musik Angklung" class="adventure-mini-image">
                     <div class="info-label">ALAT MUSIK</div>
                     <div id="adventure-instrument-name" class="info-value">🎵 Angklung</div>
                 </div>
@@ -2850,8 +2861,8 @@
             </div>
             
             <div class="adventure-buttons">
-                <button id="adventure-start-btn" class="btn-gold adventure-btn" onclick="startAdventure()">MULAI</button>
-                <button id="adventure-continue-btn" class="btn-gold adventure-btn hidden" onclick="proceedToQuiz()">LANJUT KE SOAL</button>
+                <button id="adventure-start-btn" class="btn-gold adventure-btn" onclick="startAdventure()">MULAI MINI GAME</button>
+                <button id="adventure-continue-btn" class="btn-gold adventure-btn hidden" onclick="proceedToQuiz()">NEXT KE SOAL</button>
             </div>
             
             <p id="adventure-status" class="adventure-status-hidden"></p>
