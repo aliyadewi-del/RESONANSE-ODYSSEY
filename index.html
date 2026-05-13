@@ -1315,23 +1315,107 @@
             cursor: not-allowed;
         }
 
-        /* Adventure game styles */
+        /* Adventure Overlay Container */
+        #adventure-overlay {
+            overflow-y: auto;
+            padding: clamp(16px, 3vw, 24px);
+        }
+
+        #adventure-overlay::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        #adventure-overlay::-webkit-scrollbar-track {
+            background: rgba(200, 155, 60, 0.1);
+        }
+
+        #adventure-overlay::-webkit-scrollbar-thumb {
+            background: #C89B3C;
+            border-radius: 4px;
+        }
+
+        .adventure-container {
+            max-width: min(95vw, 700px);
+            width: 100%;
+            height: auto;
+            max-height: 95vh;
+            background: linear-gradient(135deg, #F6EBD3 0%, #E8D7B9 50%);
+            border-radius: 28px;
+            border: 3px solid #C89B3C;
+            padding: clamp(24px, 4vw, 32px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: clamp(18px, 3vw, 28px);
+            box-shadow: 0 28px 68px rgba(0, 0, 0, 0.22);
+            overflow-y: auto;
+        }
+
+        .adventure-title {
+            font-size: clamp(28px, 6vw, 38px);
+            color: #3C2B20;
+            font-weight: 900;
+            margin: 0;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        /* Info Row - Wilayah & Alat Musik */
+        .adventure-info-row {
+            display: flex;
+            gap: clamp(16px, 3vw, 24px);
+            width: 100%;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .adventure-info-card {
+            flex: 1;
+            min-width: 140px;
+            max-width: 200px;
+            background: rgba(200, 155, 60, 0.1);
+            border: 2px solid #C89B3C;
+            border-radius: 14px;
+            padding: clamp(12px, 2vw, 18px);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .adventure-info-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
+        }
+
+        .info-label {
+            font-size: clamp(11px, 1.8vw, 13px);
+            font-weight: 700;
+            color: #8B5E3C;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+        }
+
+        .info-value {
+            font-size: clamp(16px, 3vw, 20px);
+            font-weight: 800;
+            color: #3C2B20;
+        }
+
+        /* Game Stage */
         .adventure-stage {
             position: relative;
-            width: min(420px, 55vh, 90vw);
+            width: min(380px, 50vh, 100%);
             aspect-ratio: 1 / 1;
             margin: 0 auto;
             background: linear-gradient(to bottom, #8ed081 0%, #8ed081 14%, #4a4a4a 14%, #4a4a4a 86%, #8ed081 86%, #8ed081 100%);
-            border-radius: 18px;
+            border-radius: 20px;
             overflow: hidden;
-            border: 3px solid rgba(255,255,255,0.45);
-            box-shadow: inset 0 0 20px rgba(0,0,0,0.14);
-        }
-
-        #adventure-status {
-            margin: 0;
-            font-size: clamp(13px, 2vw, 15px);
-            line-height: 1.4;
+            border: 4px solid rgba(200, 155, 60, 0.4);
+            box-shadow: inset 0 0 24px rgba(0,0,0,0.18), 0 12px 32px rgba(0,0,0,0.15);
         }
 
         .adventure-stage::before,
@@ -1387,15 +1471,15 @@
             position: absolute;
             width: clamp(36px, 8vw, 44px);
             height: clamp(36px, 8vw, 44px);
-            background: #f59e0b;
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
             color: #3f3f46;
             border-radius: 18px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: clamp(16px, 3.5vw, 20px);
-            box-shadow: 0 8px 18px rgba(0,0,0,0.18);
-            border: 2px solid rgba(255,255,255,0.7);
+            box-shadow: 0 8px 18px rgba(0,0,0,0.18), 0 0 16px rgba(255, 215, 0, 0.4);
+            border: 2px solid rgba(255,255,255,0.8);
         }
 
         .adventure-obstacle img {
@@ -1410,15 +1494,83 @@
             color: #ffffff;
         }
 
-        .adventure-lane-0 { left: 15%; }
-        .adventure-lane-1 { left: 50%; }
-        .adventure-lane-2 { left: 85%; }
-
-        .adventure-note {
+        /* Instruction Text */
+        .adventure-instruction {
+            font-size: clamp(14px, 2.5vw, 16px);
+            color: #3C2B20;
             text-align: center;
-            color: #4E2E1E;
-            font-weight: bold;
+            margin: 0;
+            font-weight: 600;
+            line-height: 1.4;
         }
+
+        /* Stats Row - Waktu | Target | Skor */
+        .adventure-stats-row {
+            display: flex;
+            gap: clamp(14px, 3vw, 22px);
+            width: 100%;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .adventure-stat {
+            flex: 0 1 auto;
+            min-width: 100px;
+            background: rgba(255, 255, 255, 0.6);
+            border: 2px solid #C89B3C;
+            border-radius: 14px;
+            padding: clamp(12px, 2vw, 16px);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .stat-label {
+            font-size: clamp(10px, 1.6vw, 12px);
+            font-weight: 700;
+            color: #8B5E3C;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+        }
+
+        .stat-value {
+            font-size: clamp(18px, 3.2vw, 22px);
+            font-weight: 900;
+            color: #C89B3C;
+        }
+
+        /* Buttons */
+        .adventure-buttons {
+            display: flex;
+            gap: clamp(12px, 2vw, 18px);
+            width: 100%;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .adventure-btn {
+            flex: 0 1 auto;
+            min-width: 140px;
+            max-width: 200px;
+            padding: clamp(12px, 2vw, 16px) clamp(24px, 4vw, 32px);
+            font-size: clamp(14px, 2.2vw, 16px);
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            transition: all 0.3s ease;
+        }
+
+        .adventure-btn:not(:disabled):hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+        }
+
+        .adventure-status-hidden {
+            display: none;
+        }
+
 
         @keyframes fadeIn {
             from { opacity: 0; transform: scale(0.95); }
@@ -2650,9 +2802,20 @@
 
     <!-- ADVENTURE OVERLAY -->
     <div id="adventure-overlay" class="screen-overlay hidden">
-        <div class="content-card">
-            <h2>MINI-GAME PETUALANGAN</h2>
-            <p id="adventure-subtitle">Hindari rintangan dan lanjutkan ke tantangan musik setelah berhasil.</p>
+        <div class="adventure-container">
+            <h2 class="adventure-title">🎮 MINI-GAME PETUALANGAN</h2>
+            
+            <div class="adventure-info-row">
+                <div class="adventure-info-card">
+                    <div class="info-label">WILAYAH</div>
+                    <div id="adventure-region-name" class="info-value">Jawa Barat</div>
+                </div>
+                <div class="adventure-info-card">
+                    <div class="info-label">ALAT MUSIK</div>
+                    <div id="adventure-instrument-name" class="info-value">🎵 Angklung</div>
+                </div>
+            </div>
+            
             <div id="adventure-stage" class="adventure-stage">
                 <div class="road-line line-1"></div>
                 <div class="road-line line-2"></div>
@@ -2662,9 +2825,30 @@
                 <div class="road-tree tree-right tree-right-2">🌴</div>
                 <div id="adventure-player" class="adventure-player">🧍</div>
             </div>
-            <p id="adventure-status" style="margin-top: 15px; font-size: clamp(12px, 2.5vw, 14px); color: #4E2E1E;">Tekan MULAI untuk bergerak dan tangkap alat musik yang benar.</p>
-            <button id="adventure-start-btn" class="btn-gold" onclick="startAdventure()">MULAI PETUALANGAN</button>
-            <button id="adventure-continue-btn" class="btn-gold hidden" onclick="proceedToQuiz()">LANJUT KE SOAL</button>
+            
+            <p id="adventure-instruction" class="adventure-instruction">Tangkap alat musik yang jatuh untuk lanjut ke soal</p>
+            
+            <div class="adventure-stats-row">
+                <div class="adventure-stat">
+                    <div class="stat-label">WAKTU</div>
+                    <div id="adventure-timer" class="stat-value">10s</div>
+                </div>
+                <div class="adventure-stat">
+                    <div class="stat-label">TARGET</div>
+                    <div id="adventure-target" class="stat-value">1</div>
+                </div>
+                <div class="adventure-stat">
+                    <div class="stat-label">SKOR</div>
+                    <div id="adventure-score" class="stat-value">0</div>
+                </div>
+            </div>
+            
+            <div class="adventure-buttons">
+                <button id="adventure-start-btn" class="btn-gold adventure-btn" onclick="startAdventure()">MULAI</button>
+                <button id="adventure-continue-btn" class="btn-gold adventure-btn hidden" onclick="proceedToQuiz()">LANJUT KE SOAL</button>
+            </div>
+            
+            <p id="adventure-status" class="adventure-status-hidden"></p>
         </div>
     </div>
 
@@ -3556,8 +3740,14 @@
             const overlay = document.getElementById('adventure-overlay');
             const instrument = instrumentMap[state.idx] || { name: 'Alat Musik', icon: '🎵' };
             adventureState.correctInstrument = instrument;
-            document.getElementById('adventure-subtitle').innerText = `Mini-game petualangan dimulai di ${cityData[state.idx].name}. Tangkap alat musik yang sesuai: ${instrument.name}`;
-            document.getElementById('adventure-status').innerText = `Tekan MULAI untuk menangkap ${instrument.name}. Gunakan panah kiri dan kanan.`;
+            
+            // Update info cards
+            document.getElementById('adventure-region-name').innerText = cityData[state.idx].name;
+            document.getElementById('adventure-instrument-name').innerText = `${instrument.icon} ${instrument.name}`;
+            
+            // Update instruction
+            document.getElementById('adventure-instruction').innerText = `Tangkap ${instrument.name} untuk lanjut ke soal`;
+            
             document.getElementById('adventure-start-btn').classList.remove('hidden');
             document.getElementById('adventure-continue-btn').classList.add('hidden');
             document.getElementById('area-preview-overlay').classList.remove('show');
@@ -3577,7 +3767,7 @@
             adventureState.finished = false;
             adventureState.caught = false;
 
-            document.getElementById('adventure-status').innerText = `Tantangan dimulai. Tangkap ${adventureState.correctInstrument.name} ${adventureState.correctInstrument.icon} yang jatuh dari atas.`;
+            document.getElementById('adventure-instruction').innerText = `⏱️ Tangkap ${adventureState.correctInstrument.name} yang jatuh!`;
             document.getElementById('adventure-start-btn').classList.add('hidden');
             document.getElementById('adventure-continue-btn').classList.add('hidden');
 
@@ -3664,7 +3854,7 @@
                         playSound(130, 0.2);
                         obs.el.style.background = '#f87171';
                         obs.el.style.color = '#fff';
-                        document.getElementById('adventure-status').innerText = `Salah! Tangkap ${adventureState.correctInstrument.name} ${adventureState.correctInstrument.icon}. Coba lagi.`;
+                        document.getElementById('adventure-instruction').innerText = `❌ Salah! Tangkap ${adventureState.correctInstrument.name} ${adventureState.correctInstrument.icon}. Coba lagi.`;
                         obs.hit = true;
                     }
                 }
@@ -3702,7 +3892,7 @@
             const stage = document.getElementById('adventure-stage');
             stage.removeEventListener('mousemove', handleMouseMove);
             stage.removeEventListener('touchmove', handleTouchMove);
-            document.getElementById('adventure-status').innerText = 'Selamat! Kamu berhasil melewati tantangan. Karakter akan berjalan ke wilayah.';
+            document.getElementById('adventure-instruction').innerText = '✅ Berhasil! Tekan LANJUT KE SOAL untuk melanjutkan.';
             
             // Animasi karakter berjalan ke wilayah
             animateCharacterToRegion();
@@ -3715,11 +3905,9 @@
                 token.style.animation = 'bounce 1s ease-in-out';
                 setTimeout(() => {
                     token.style.animation = '';
-                    document.getElementById('adventure-status').innerText = 'Karakter telah mencapai wilayah! Tekan tombol di bawah untuk lanjut ke kartu soal.';
                     document.getElementById('adventure-continue-btn').classList.remove('hidden');
                 }, 1000);
             } else {
-                document.getElementById('adventure-status').innerText = 'Karakter telah mencapai wilayah! Tekan tombol di bawah untuk lanjut ke kartu soal.';
                 document.getElementById('adventure-continue-btn').classList.remove('hidden');
             }
         }
