@@ -38,11 +38,15 @@
             user-select: none;
         }
 
+        #top-status {
+            display: none !important;
+        }
+
         /* Desktop Split Layout (1024px+) */
         @media (min-width: 1024px) {
             body {
                 display: grid;
-                grid-template-columns: 260px 1fr 260px;
+                grid-template-columns: 1fr 360px;
                 grid-template-rows: 1fr;
                 height: 100vh;
                 overflow: hidden;
@@ -72,7 +76,7 @@
             }
 
             .game-main {
-                grid-column: 2;
+                grid-column: 1;
                 grid-row: 1;
                 width: 100%;
                 height: 100vh;
@@ -88,9 +92,11 @@
             }
 
             .game-panel {
-                grid-column: 3;
+                grid-column: 2;
                 grid-row: 1;
                 width: 100%;
+                min-width: 300px;
+                max-width: 360px;
                 height: 100vh;
                 display: flex !important;
                 flex-direction: column;
@@ -109,8 +115,8 @@
             }
 
             .game-main .monopoly-board {
-                width: 520px;
-                height: 520px;
+                width: min(720px, 80vw, 90vh);
+                height: min(720px, 80vw, 90vh);
                 max-width: 100%;
                 max-height: 100%;
             }
@@ -835,9 +841,9 @@
             background: #F6EBD3;
             padding: 12px;
             border-radius: 16px;
-            width: min(420px, 55vh, 90vw);
+            width: min(720px, 85vw, 90vh);
             max-width: 100%;
-            height: auto;
+            height: min(720px, 85vw, 90vh);
             aspect-ratio: 1 / 1;
             position: relative;
             border: 4px solid #C89B3C;
@@ -845,9 +851,7 @@
         }
 
         .tile {
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
+            background: #FFF3D3;
             border: 2px solid #C89B3C;
             display: flex;
             flex-direction: column;
@@ -2724,27 +2728,7 @@
     </div>
 
     <!-- STATUS BAR -->
-    <header id="top-status" class="status-bar hidden">
-        <div class="status-top-row">
-            <div class="avatar-badge">
-                <div id="status-avatar"></div>
-                <div class="player-info">
-                    <span class="player-name" id="display-player-name"></span>
-                    <span class="player-title">Pecinta Musik Nusantara</span>
-                </div>
-            </div>
-            <div class="status-metric-row">
-                <div class="status-card location-info">
-                    <div class="location-label">Lokasi</div>
-                    <div id="current-loc">-</div>
-                </div>
-                <div class="status-card stamina-info">
-                    <div class="stamina-label">Stamina</div>
-                    <div id="life-icons">❤️❤️❤️❤️❤️</div>
-                </div>
-            </div>
-        </div>
-    </header>
+    <header id="top-status" class="status-bar hidden"></header>
 
     <!-- GAME BOARD -->
     <main class="game-main">
@@ -2760,12 +2744,30 @@
     </main>
 
     <aside class="game-panel">
+        <div class="panel-card avatar-card">
+            <div id="panel-avatar" class="avatar-badge"></div>
+            <div class="player-info">
+                <span class="player-name" id="panel-player-name">-</span>
+                <span class="player-title">Pecinta Musik Nusantara</span>
+            </div>
+        </div>
+        <div class="panel-card location-card">
+            <div class="location-label">Lokasi / Wilayah Saat Ini</div>
+            <div id="panel-location" class="panel-location-name">-</div>
+        </div>
         <div class="panel-card panel-mission-card">
             <h2>Misi Saat Ini</h2>
             <p>Kunjungi kota berikutnya dan jawab pertanyaan musik Nusantara.</p>
             <div class="panel-metrics">
-                <div class="metric-row"><span>Progress</span><strong id="panel-progress">0 / 16 Kota</strong></div>
+                <div class="metric-row"><span>Progress</span><strong id="panel-progress">0 / 15 Kota</strong></div>
                 <div class="metric-row"><span>Skor</span><strong id="panel-score">0</strong></div>
+            </div>
+        </div>
+        <div class="panel-card panel-stats-card">
+            <h2>Statistik</h2>
+            <div class="panel-metrics">
+                <div class="metric-row"><span>Jawaban Benar</span><strong id="panel-correct">0</strong></div>
+                <div class="metric-row"><span>Jawaban Salah</span><strong id="panel-wrong">0</strong></div>
             </div>
         </div>
     </aside>
@@ -2959,6 +2961,8 @@
             { name: "Sumatera Selatan", side: "side-left", music: "", image: "https://raw.githubusercontent.com/AYAA-lab/resonance-odyssey/0e31389538a02c42684025cbc04d8fb04add8b76/JAKARTA.png" },
             { name: "Bali", side: "side-left", image: "https://raw.githubusercontent.com/riyanarahman320/c2FraXQgdGF1dSwgZ2EgYWRpbCByYXNhbnlh/e57ec7031a0fdba39923804793d4528ed2617d21/BALI.png", music: "https://raw.githubusercontent.com/AYAA-lab/Game-Resonance-Odyssey/main/freesound_community-seruling-sunda-34162.mp3" }
         ];
+
+        const TOTAL_CITIES = cityData.length - 1;
 
         const cityQuestions = {
             1: { q: "Musik orkestra Betawi yang dipengaruhi budaya Eropa dan menggunakan alat musik tiup logam disebut?", a: ["Tanjidor", "Gambang Kromong", "Keroncong", "Marawis"], correct: 0 },
@@ -3221,33 +3225,47 @@
             if (statusAvatar) {
                 statusAvatar.innerHTML = avatarHtml || '🧍';
             }
+            const panelAvatar = document.getElementById('panel-avatar');
+            if (panelAvatar) {
+                panelAvatar.innerHTML = avatarHtml || '🧍';
+            }
         }
 
         function updateStatusPanel() {
             const schoolElement = document.getElementById('display-school-name');
             const visitedElement = document.getElementById('visited-count');
-            const scoreElement = document.getElementById('score-value');
+            const panelPlayerName = document.getElementById('panel-player-name');
+            const panelLocation = document.getElementById('panel-location');
             const panelProgress = document.getElementById('panel-progress');
             const panelScore = document.getElementById('panel-score');
-            const totalCities = document.getElementById('total-cities');
+            const panelCorrect = document.getElementById('panel-correct');
+            const panelWrong = document.getElementById('panel-wrong');
+
+            const visitedCount = Math.max(0, state.visited.size - 1);
 
             if (schoolElement) {
                 schoolElement.innerText = state.schoolName || 'Sekolah Nusantara';
             }
+            if (panelPlayerName) {
+                panelPlayerName.innerText = state.playerName || '-';
+            }
             if (visitedElement) {
-                visitedElement.innerText = `${state.visited.size} / ${cityData.length} Kota`;
+                visitedElement.innerText = `${visitedCount} / ${TOTAL_CITIES} Kota`;
+            }
+            if (panelLocation) {
+                panelLocation.innerText = cityData[state.idx] ? cityData[state.idx].name : '-';
             }
             if (panelProgress) {
-                panelProgress.innerText = `${state.visited.size} / ${cityData.length} Kota`;
-            }
-            if (scoreElement) {
-                scoreElement.innerText = state.score;
+                panelProgress.innerText = `${visitedCount} / ${TOTAL_CITIES} Kota`;
             }
             if (panelScore) {
                 panelScore.innerText = state.score;
             }
-            if (totalCities) {
-                totalCities.innerText = cityData.length;
+            if (panelCorrect) {
+                panelCorrect.innerText = state.answers.filter(a => a.correct).length;
+            }
+            if (panelWrong) {
+                panelWrong.innerText = state.answers.filter(a => !a.correct).length;
             }
         }
 
@@ -3264,7 +3282,10 @@
             document.getElementById('screen-instructions').classList.add('hidden');
             document.getElementById('top-status').classList.remove('hidden');
             setPlayerAvatar();
-            document.getElementById('display-player-name').innerText = state.playerName;
+            const panelNameEl = document.getElementById('panel-player-name');
+            if (panelNameEl) {
+                panelNameEl.innerText = state.playerName;
+            }
             updateStatusPanel();
             
             updateTokenPos();
@@ -3284,12 +3305,9 @@
                     tile.dataset.index = i;
                     tile.style.gridRow = gridCoords[i][0];
                     tile.style.gridColumn = gridCoords[i][1];
-                    let inner = `<span style="z-index: 10;">${city.name}</span>`;
-
-                    // Set background image - use city.image if available, otherwise use default JAKARTA.png
-                    const imageUrl = city.image || defaultImage;
-                    tile.style.backgroundImage = `url(${imageUrl})`;
-
+                            let inner = `<span style="z-index: 10;">${city.name}</span>`;
+                    tile.style.backgroundImage = '';
+                    tile.style.backgroundColor = '#FFF3D3';
                     tile.innerHTML = inner;
                     board.appendChild(tile);
             });
@@ -3349,11 +3367,9 @@
             const centerImageEl = document.querySelector('.center-image');
             const centerTitleEl = document.querySelector('.center-title');
             if (centerImageEl) {
-                const newImage = cityData[state.idx].image || DEFAULT_PREVIEW_IMAGE;
                 centerImageEl.style.opacity = '0.5';
                 centerImageEl.style.transition = 'all 0.4s ease';
                 setTimeout(() => {
-                    centerImageEl.src = newImage;
                     centerImageEl.style.opacity = '1';
                 }, 200);
             }
