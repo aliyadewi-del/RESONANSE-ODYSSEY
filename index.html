@@ -38,31 +38,44 @@
             user-select: none;
         }
 
-        #top-status {
-            display: none !important;
-        }
-
         /* Desktop Split Layout (1024px+) */
         @media (min-width: 1024px) {
             body {
                 display: grid;
-                grid-template-columns: 1fr 360px;
+                grid-template-columns: 260px 1fr 260px;
                 grid-template-rows: 1fr;
                 height: 100vh;
                 overflow: hidden;
             }
 
             #top-status {
-                display: none !important;
-            }
-
-            .game-main {
                 grid-column: 1;
                 grid-row: 1;
                 width: 100%;
+                height: auto;
+                max-height: 100vh;
+                display: flex !important;
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: stretch;
+                background: linear-gradient(180deg, #F6EBD3 0%, #E8D7B9 50%);
+                border-right: 4px solid #C89B3C;
+                border-bottom: none;
+                padding: 18px 16px;
+                gap: 14px;
+                overflow-y: visible;
+                overscroll-behavior: contain;
+                position: sticky;
+                top: 0;
+                z-index: 30;
+                box-shadow: inset -8px 0 12px rgba(0,0,0,0.08);
+            }
+
+            .game-main {
+                grid-column: 2;
+                grid-row: 1;
+                width: 100%;
                 height: 100vh;
-                min-width: 0;
-                min-height: 0;
                 display: flex !important;
                 flex-direction: column;
                 align-items: center;
@@ -72,15 +85,12 @@
                 background: linear-gradient(135deg, #C89B3C 0%, #F6EBD3 50%, #E8D7B9 100%);
                 overflow: visible;
                 position: relative;
-                z-index: 1;
             }
 
             .game-panel {
-                grid-column: 2;
+                grid-column: 3;
                 grid-row: 1;
                 width: 100%;
-                min-width: 300px;
-                max-width: 360px;
                 height: 100vh;
                 display: flex !important;
                 flex-direction: column;
@@ -99,8 +109,8 @@
             }
 
             .game-main .monopoly-board {
-                width: min(720px, 80vw, 90vh);
-                height: min(720px, 80vw, 90vh);
+                width: 520px;
+                height: 520px;
                 max-width: 100%;
                 max-height: 100%;
             }
@@ -121,13 +131,8 @@
                 justify-content: center;
                 align-items: center;
                 width: 100%;
-                min-width: 0;
-                min-height: 0;
                 height: 100%;
                 gap: 12px;
-                position: relative;
-                z-index: 1;
-                margin: 0 auto;
             }
 
             /* Reorganize status bar into vertical card layout */
@@ -830,21 +835,19 @@
             background: #F6EBD3;
             padding: 12px;
             border-radius: 16px;
-            width: min(720px, 85vw, 90vh);
+            width: min(420px, 55vh, 90vw);
             max-width: 100%;
-            min-width: 320px;
-            height: min(720px, 85vw, 90vh);
-            max-height: 100%;
-            min-height: 320px;
+            height: auto;
             aspect-ratio: 1 / 1;
             position: relative;
             border: 4px solid #C89B3C;
             box-shadow: inset 0 0 16px rgba(0,0,0,0.25), 0 8px 24px rgba(0,0,0,0.4);
-            z-index: 2;
         }
 
         .tile {
-            background: #FFF3D3;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
             border: 2px solid #C89B3C;
             display: flex;
             flex-direction: column;
@@ -1630,7 +1633,7 @@
             align-items: center;
             box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
             pointer-events: none;
-            z-index: 3;
+            z-index: 5;
             overflow: hidden;
         }
 
@@ -2721,7 +2724,27 @@
     </div>
 
     <!-- STATUS BAR -->
-    <header id="top-status" class="status-bar hidden"></header>
+    <header id="top-status" class="status-bar hidden">
+        <div class="status-top-row">
+            <div class="avatar-badge">
+                <div id="status-avatar"></div>
+                <div class="player-info">
+                    <span class="player-name" id="display-player-name"></span>
+                    <span class="player-title">Pecinta Musik Nusantara</span>
+                </div>
+            </div>
+            <div class="status-metric-row">
+                <div class="status-card location-info">
+                    <div class="location-label">Lokasi</div>
+                    <div id="current-loc">-</div>
+                </div>
+                <div class="status-card stamina-info">
+                    <div class="stamina-label">Stamina</div>
+                    <div id="life-icons">❤️❤️❤️❤️❤️</div>
+                </div>
+            </div>
+        </div>
+    </header>
 
     <!-- GAME BOARD -->
     <main class="game-main">
@@ -2737,30 +2760,12 @@
     </main>
 
     <aside class="game-panel">
-        <div class="panel-card avatar-card">
-            <div id="panel-avatar" class="avatar-badge"></div>
-            <div class="player-info">
-                <span class="player-name" id="panel-player-name">-</span>
-                <span class="player-title">Pecinta Musik Nusantara</span>
-            </div>
-        </div>
-        <div class="panel-card location-card">
-            <div class="location-label">Lokasi / Wilayah Saat Ini</div>
-            <div id="panel-location" class="panel-location-name">-</div>
-        </div>
         <div class="panel-card panel-mission-card">
             <h2>Misi Saat Ini</h2>
             <p>Kunjungi kota berikutnya dan jawab pertanyaan musik Nusantara.</p>
             <div class="panel-metrics">
-                <div class="metric-row"><span>Progress</span><strong id="panel-progress">0 / 15 Kota</strong></div>
+                <div class="metric-row"><span>Progress</span><strong id="panel-progress">0 / 16 Kota</strong></div>
                 <div class="metric-row"><span>Skor</span><strong id="panel-score">0</strong></div>
-            </div>
-        </div>
-        <div class="panel-card panel-stats-card">
-            <h2>Statistik</h2>
-            <div class="panel-metrics">
-                <div class="metric-row"><span>Jawaban Benar</span><strong id="panel-correct">0</strong></div>
-                <div class="metric-row"><span>Jawaban Salah</span><strong id="panel-wrong">0</strong></div>
             </div>
         </div>
     </aside>
@@ -2954,8 +2959,6 @@
             { name: "Sumatera Selatan", side: "side-left", music: "", image: "https://raw.githubusercontent.com/AYAA-lab/resonance-odyssey/0e31389538a02c42684025cbc04d8fb04add8b76/JAKARTA.png" },
             { name: "Bali", side: "side-left", image: "https://raw.githubusercontent.com/riyanarahman320/c2FraXQgdGF1dSwgZ2EgYWRpbCByYXNhbnlh/e57ec7031a0fdba39923804793d4528ed2617d21/BALI.png", music: "https://raw.githubusercontent.com/AYAA-lab/Game-Resonance-Odyssey/main/freesound_community-seruling-sunda-34162.mp3" }
         ];
-
-        const TOTAL_CITIES = cityData.length - 1;
 
         const cityQuestions = {
             1: { q: "Musik orkestra Betawi yang dipengaruhi budaya Eropa dan menggunakan alat musik tiup logam disebut?", a: ["Tanjidor", "Gambang Kromong", "Keroncong", "Marawis"], correct: 0 },
@@ -3218,47 +3221,33 @@
             if (statusAvatar) {
                 statusAvatar.innerHTML = avatarHtml || '🧍';
             }
-            const panelAvatar = document.getElementById('panel-avatar');
-            if (panelAvatar) {
-                panelAvatar.innerHTML = avatarHtml || '🧍';
-            }
         }
 
         function updateStatusPanel() {
             const schoolElement = document.getElementById('display-school-name');
             const visitedElement = document.getElementById('visited-count');
-            const panelPlayerName = document.getElementById('panel-player-name');
-            const panelLocation = document.getElementById('panel-location');
+            const scoreElement = document.getElementById('score-value');
             const panelProgress = document.getElementById('panel-progress');
             const panelScore = document.getElementById('panel-score');
-            const panelCorrect = document.getElementById('panel-correct');
-            const panelWrong = document.getElementById('panel-wrong');
-
-            const visitedCount = Math.max(0, state.visited.size - 1);
+            const totalCities = document.getElementById('total-cities');
 
             if (schoolElement) {
                 schoolElement.innerText = state.schoolName || 'Sekolah Nusantara';
             }
-            if (panelPlayerName) {
-                panelPlayerName.innerText = state.playerName || '-';
-            }
             if (visitedElement) {
-                visitedElement.innerText = `${visitedCount} / ${TOTAL_CITIES} Kota`;
-            }
-            if (panelLocation) {
-                panelLocation.innerText = cityData[state.idx] ? cityData[state.idx].name : '-';
+                visitedElement.innerText = `${state.visited.size} / ${cityData.length} Kota`;
             }
             if (panelProgress) {
-                panelProgress.innerText = `${visitedCount} / ${TOTAL_CITIES} Kota`;
+                panelProgress.innerText = `${state.visited.size} / ${cityData.length} Kota`;
+            }
+            if (scoreElement) {
+                scoreElement.innerText = state.score;
             }
             if (panelScore) {
                 panelScore.innerText = state.score;
             }
-            if (panelCorrect) {
-                panelCorrect.innerText = state.answers.filter(a => a.correct).length;
-            }
-            if (panelWrong) {
-                panelWrong.innerText = state.answers.filter(a => !a.correct).length;
+            if (totalCities) {
+                totalCities.innerText = cityData.length;
             }
         }
 
@@ -3275,10 +3264,7 @@
             document.getElementById('screen-instructions').classList.add('hidden');
             document.getElementById('top-status').classList.remove('hidden');
             setPlayerAvatar();
-            const panelNameEl = document.getElementById('panel-player-name');
-            if (panelNameEl) {
-                panelNameEl.innerText = state.playerName;
-            }
+            document.getElementById('display-player-name').innerText = state.playerName;
             updateStatusPanel();
             
             updateTokenPos();
@@ -3291,26 +3277,21 @@
             
             cityData.forEach((city, i) => {
                 if (i === 0) return;
+                
+                    const tile = document.createElement('div');
+                    tile.className = `tile ${city.side === 'corner' ? 'corner-tile' : city.side}`;
+                    tile.id = `tile-${i}`;
+                    tile.dataset.index = i;
+                    tile.style.gridRow = gridCoords[i][0];
+                    tile.style.gridColumn = gridCoords[i][1];
+                    let inner = `<span style="z-index: 10;">${city.name}</span>`;
 
-                const tile = document.createElement('div');
-                tile.className = `tile ${city.side === 'corner' ? 'corner-tile' : city.side}`;
-                tile.id = `tile-${i}`;
-                tile.dataset.index = i;
-                tile.style.gridRow = gridCoords[i][0];
-                tile.style.gridColumn = gridCoords[i][1];
-                tile.style.backgroundImage = '';
-                tile.style.backgroundColor = '#FFF3D3';
-                tile.style.cursor = 'pointer';
-                tile.innerHTML = `<span style="z-index: 10;">${city.name}</span>`;
-                tile.addEventListener('click', (event) => {
-                    event.stopPropagation();
-                    const tileIndex = Number(tile.dataset.index);
-                    const nextIndex = getNextTileIndex();
-                    if (nextIndex !== null && tileIndex === nextIndex && !state.isMoving) {
-                        moveToNextTile();
-                    }
-                });
-                board.appendChild(tile);
+                    // Set background image - use city.image if available, otherwise use default JAKARTA.png
+                    const imageUrl = city.image || defaultImage;
+                    tile.style.backgroundImage = `url(${imageUrl})`;
+
+                    tile.innerHTML = inner;
+                    board.appendChild(tile);
             });
         }
 
@@ -3339,7 +3320,7 @@
         const gameBoard = document.getElementById('board');
         if (gameBoard) {
             gameBoard.addEventListener('click', (event) => {
-                const tile = event.target.closest('.tile');
+                const tile = event.target.closest('.tile.clickable');
                 if (!tile) return;
 
                 const tileIndex = Number(tile.dataset.index);
@@ -3368,9 +3349,11 @@
             const centerImageEl = document.querySelector('.center-image');
             const centerTitleEl = document.querySelector('.center-title');
             if (centerImageEl) {
+                const newImage = cityData[state.idx].image || DEFAULT_PREVIEW_IMAGE;
                 centerImageEl.style.opacity = '0.5';
                 centerImageEl.style.transition = 'all 0.4s ease';
                 setTimeout(() => {
+                    centerImageEl.src = newImage;
                     centerImageEl.style.opacity = '1';
                 }, 200);
             }
