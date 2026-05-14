@@ -1387,18 +1387,18 @@
         }
 
         .adventure-info-card {
-            flex: 1 1 170px;
-            min-width: 140px;
-            max-width: 220px;
+            flex: 1 1 120px;
+            min-width: 100px;
+            max-width: 150px;
             background: rgba(255, 255, 255, 0.95);
             border: 1px solid rgba(200, 155, 60, 0.35);
-            border-radius: 16px;
-            padding: clamp(6px, 0.7vw, 8px);
+            border-radius: 14px;
+            padding: clamp(3px, 0.4vw, 5px);
             text-align: left;
             display: flex;
             flex-direction: column;
-            gap: 4px;
-            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
+            gap: 2px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             justify-content: center;
         }
@@ -1417,22 +1417,22 @@
         .info-main {
             display: flex;
             align-items: center;
-            gap: clamp(10px, 1vw, 12px);
+            gap: clamp(6px, 0.8vw, 8px);
             justify-content: flex-start;
             width: 100%;
         }
 
         .adventure-mini-image {
-            width: clamp(30px, 6vw, 40px);
-            height: clamp(30px, 6vw, 40px);
-            border-radius: 12px;
+            width: clamp(20px, 4vw, 26px);
+            height: clamp(20px, 4vw, 26px);
+            border-radius: 10px;
             object-fit: cover;
             border: 1px solid rgba(76, 35, 17, 0.16);
             background: #fff;
         }
 
         .info-value {
-            font-size: clamp(13px, 1.6vw, 16px);
+            font-size: clamp(10px, 1vw, 12px);
             font-weight: 900;
             color: #3C2B20;
             white-space: nowrap;
@@ -1543,41 +1543,6 @@
             max-width: 100%;
         }
 
-        /* Stats Row - Waktu | Target | Skor */
-        .adventure-stats-row {
-            display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: clamp(6px, 0.8vw, 8px);
-            width: 100%;
-            justify-items: stretch;
-        }
-
-        .adventure-stat {
-            background: rgba(255, 255, 255, 0.88);
-            border: 1px solid #C89B3C;
-            border-radius: 12px;
-            padding: clamp(6px, 0.8vw, 8px);
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
-        }
-
-        .stat-label {
-            font-size: clamp(7px, 0.9vw, 9px);
-            font-weight: 700;
-            color: #8B5E3C;
-            text-transform: uppercase;
-            letter-spacing: 0.06em;
-        }
-
-        .stat-value {
-            font-size: clamp(12px, 1.4vw, 14px);
-            font-weight: 900;
-            color: #C89B3C;
-        }
-
         /* Buttons */
         .adventure-buttons {
             display: flex;
@@ -1600,16 +1565,6 @@
             box-shadow: 0 8px 0 #4E2E1E;
             max-width: 100%;
             transition: all 0.3s ease;
-        }
-
-        .adventure-footer-note {
-            margin: 0;
-            padding: 0;
-            font-size: clamp(10px, 1vw, 12px);
-            color: #7B5A31;
-            text-align: center;
-            opacity: 0.85;
-            letter-spacing: 0.02em;
         }
 
         .adventure-btn:not(:disabled):hover {
@@ -2783,24 +2738,6 @@
                 </div>
             </div>
         </div>
-        <div class="status-summary">
-            <div class="status-summary-item">
-                <span class="status-summary-label">Nama Sekolah</span>
-                <strong id="display-school-name">-</strong>
-            </div>
-            <div class="status-summary-item">
-                <span class="status-summary-label">Progress</span>
-                <strong id="visited-count">0 / 16 Kota</strong>
-            </div>
-            <div class="status-summary-item">
-                <span class="status-summary-label">Skor</span>
-                <strong id="score-value">0</strong>
-            </div>
-            <div class="status-summary-item">
-                <span class="status-summary-label">Jumlah Kota</span>
-                <strong id="total-cities">16</strong>
-            </div>
-        </div>
     </header>
 
     <!-- GAME BOARD -->
@@ -2813,6 +2750,7 @@
                 </div>
                 <div id="player-token" class="player-token hidden"></div>
             </div>
+            <button class="btn-gold" style="align-self: center; margin-top: 16px;" onclick="startGame()">MULAI</button>
         </div>
     </main>
 
@@ -2885,26 +2823,10 @@
             
             <p id="adventure-instruction" class="adventure-instruction">Tangkap alat musik yang jatuh untuk lanjut ke soal</p>
             
-            <div class="adventure-stats-row">
-                <div class="adventure-stat">
-                    <div class="stat-label">WAKTU</div>
-                    <div id="adventure-timer" class="stat-value">10s</div>
-                </div>
-                <div class="adventure-stat">
-                    <div class="stat-label">TARGET</div>
-                    <div id="adventure-target" class="stat-value">1</div>
-                </div>
-                <div class="adventure-stat">
-                    <div class="stat-label">SKOR</div>
-                    <div id="adventure-score" class="stat-value">0</div>
-                </div>
-            </div>
-            
             <div class="adventure-buttons">
                 <button id="adventure-start-btn" class="btn-gold adventure-btn" onclick="startAdventure()">MULAI</button>
                 <button id="adventure-continue-btn" class="btn-gold adventure-btn hidden" onclick="proceedToQuiz()">LANJUT KE SOAL</button>
             </div>
-            <p class="adventure-footer-note">Gunakan panah kiri dan kanan untuk bergerak.</p>
             
             <p id="adventure-status" class="adventure-status-hidden"></p>
         </div>
