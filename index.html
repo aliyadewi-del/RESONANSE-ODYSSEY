@@ -3291,18 +3291,26 @@
             
             cityData.forEach((city, i) => {
                 if (i === 0) return;
-                
-                    const tile = document.createElement('div');
-                    tile.className = `tile ${city.side === 'corner' ? 'corner-tile' : city.side}`;
-                    tile.id = `tile-${i}`;
-                    tile.dataset.index = i;
-                    tile.style.gridRow = gridCoords[i][0];
-                    tile.style.gridColumn = gridCoords[i][1];
-                            let inner = `<span style="z-index: 10;">${city.name}</span>`;
-                    tile.style.backgroundImage = '';
-                    tile.style.backgroundColor = '#FFF3D3';
-                    tile.innerHTML = inner;
-                    board.appendChild(tile);
+
+                const tile = document.createElement('div');
+                tile.className = `tile ${city.side === 'corner' ? 'corner-tile' : city.side}`;
+                tile.id = `tile-${i}`;
+                tile.dataset.index = i;
+                tile.style.gridRow = gridCoords[i][0];
+                tile.style.gridColumn = gridCoords[i][1];
+                tile.style.backgroundImage = '';
+                tile.style.backgroundColor = '#FFF3D3';
+                tile.style.cursor = 'pointer';
+                tile.innerHTML = `<span style="z-index: 10;">${city.name}</span>`;
+                tile.addEventListener('click', (event) => {
+                    event.stopPropagation();
+                    const tileIndex = Number(tile.dataset.index);
+                    const nextIndex = getNextTileIndex();
+                    if (nextIndex !== null && tileIndex === nextIndex && !state.isMoving) {
+                        moveToNextTile();
+                    }
+                });
+                board.appendChild(tile);
             });
         }
 
@@ -3331,7 +3339,7 @@
         const gameBoard = document.getElementById('board');
         if (gameBoard) {
             gameBoard.addEventListener('click', (event) => {
-                const tile = event.target.closest('.tile.clickable');
+                const tile = event.target.closest('.tile');
                 if (!tile) return;
 
                 const tileIndex = Number(tile.dataset.index);
